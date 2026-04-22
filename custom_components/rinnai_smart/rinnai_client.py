@@ -9,7 +9,6 @@ import aiomqtt
 import datetime
 import re
 
-logging.basicConfig(level=logging.DEBUG)
 LOGGER = logging.getLogger(__package__)
 
 class HTTPClient:
@@ -33,7 +32,7 @@ class HTTPClient:
             LOGGER.error(f"Failed to login: {response}")
             return False
 
-        LOGGER.info("Successfully logged in")
+        LOGGER.debug("Successfully logged in")
         self._token = response.get("data").get("token")
         return True
 
@@ -102,7 +101,7 @@ class MQTTClient:
                 tls_context=ssl_context,
                 tls_insecure=True,
             ) as client:
-                LOGGER.info(f"MQTT connected")
+                LOGGER.debug(f"MQTT connected")
                 self._client = client
                 for mac in subscribes:
                     await self.subscribe(mac)
@@ -128,7 +127,7 @@ class MQTTClient:
         while self._client is None:
             await asyncio.sleep(1)
         await self._client.publish(topic, payload)
-        LOGGER.info(f"[Publish]: {payload}")
+        LOGGER.debug(f"[Publish]: {payload}")
 
 
 class RinnaiClient:
@@ -150,7 +149,7 @@ class RinnaiClient:
     import re
 
     async def _on_message(self, topic, payload):
-        LOGGER.info(f"[RX]: {payload}")
+        LOGGER.debug(f"[RX]: {payload}")
         payload_str = None
         try:
             tokens = topic.split("/")
@@ -202,7 +201,7 @@ class RinnaiClient:
         subscribes = []
         while True:
             try:
-                LOGGER.info("Trying to connect to MQTT server...")
+                LOGGER.debug("Trying to connect to MQTT server...")
                 await self._mqtt_client.run(ssl_context, subscribes)
             except Exception as e:
                 LOGGER.error(f"MQTT connection error: {e}")
