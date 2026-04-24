@@ -114,7 +114,7 @@ class MQTTClient:
                         LOGGER.error(f"Error on message: {message.payload}")
         except aiomqtt.MqttError:
             self._client = None
-        LOGGER.error("MQTT task exit")
+        LOGGER.debug("MQTT task exit")
 
     async def subscribe(self, mac):
         topic = f"rinnai/SR/01/SR/{mac}/+/"
@@ -212,7 +212,7 @@ class RinnaiClient:
                     backoff = MAX_BACKOFF
             else:
                 backoff = BACKOFF_INIT
-            LOGGER.warning(f"Reconnecting in {backoff} seconds")
+            LOGGER.debug(f"Reconnecting in {backoff} seconds")
             await asyncio.sleep(backoff)
             subscribes = []
             for _, (_, mac) in self._subscribes.items():
