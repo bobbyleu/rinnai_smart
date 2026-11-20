@@ -1,6 +1,7 @@
 {
   "domain": "rinnai",
   "name": "Rinnai Smart",
+  "categories": ["climate.water_heaters"],
   "codeowners": [
     "@catro"
   ],
@@ -9,9 +10,9 @@
   "documentation": "https://github.com/catro/rinnai_smart",
   "homekit": {},
   "iot_class": "cloud_push",
+  "issue_tracker": "https://github.com/bobbyleu/rinnai_smart/issues",
   "requirements": ["aiomqtt>=2.0.0"],
-  "version": "0.0.8",
-  "issue_tracker": "https://github.com/catro/rinnai_smart/issues",
   "ssdp": [],
+  "version": "0.0.8",
   "zeroconf": []
 }
