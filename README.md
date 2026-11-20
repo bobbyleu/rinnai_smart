@@ -2,6 +2,27 @@
 
 Support for [Rinnai Smart Water Heater (E86) monitoring and control device](https://www.rinnai.com.cn/productDetail-646a2c67-29d6-4aff-8ff2-167cc1d33367.html) for Home Assistant.
 
+## About this fork
+
+This repository is a fork maintained by [bobbyleu](https://github.com/bobbyleu),
+based on the original Rinnai Smart integration by [catro](https://github.com/catro/rinnai_smart).
+
+| Role | Maintainer |
+| --- | --- |
+| Original author (upstream) | [catro](https://github.com/catro/rinnai_smart) |
+| Fork maintainer | [bobbyleu](https://github.com/bobbyleu/rinnai_smart) |
+
+This fork is based on upstream version **0.0.8**. Additional changes here:
+
+- Add integration categories metadata and bundled brand icons for HACS / Marketplace validation.
+- Fix the water heater temperature properties deprecated in Home Assistant 2026.11
+  (use `native_target_temperature` and `native_temperature_unit`), so the entity keeps working after 2027.11.
+- Point `issue_tracker` in the manifest to this fork.
+
+Fork versions use the `<upstream>-bobbyleu.<N>` scheme: `<upstream>` is the
+upstream release this fork is based on, and `<N>` is the fork's own revision.
+For example, `0.0.8-bobbyleu.1` is the first fork revision based on upstream 0.0.8.
+
 ## WARNING
 
 * **RINNAI DOESN'T PROVIDE ANY OFFICIALLY SUPPORTED API, THUS THEIR CHANGES MAY BREAK HASS INTEGRATIONS AT ANY TIME.**
@@ -29,11 +50,12 @@ Support for [Rinnai Smart Water Heater (E86) monitoring and control device](http
 #### Versions
 
 The 'main' branch of this custom component is considered unstable, alpha quality and not guaranteed to work.
-Please make sure to use one of the official release branches when installing using HACS, see [what has changed in each version](https://github.com/catro/rinnai_smart/releases).
+Please make sure to use one of the releases from this fork when installing using HACS, see [what has changed in each version](https://github.com/bobbyleu/rinnai_smart/releases).
+The original upstream releases are available at [catro/rinnai_smart](https://github.com/catro/rinnai_smart/releases).
 
 #### With HACS
 
-[![Open your Home Assistant instance and open a repository inside the Home Assistant Community Store.](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=catro&repository=rinnai_smart&category=integration)
+[![Open your Home Assistant instance and open a repository inside the Home Assistant Community Store.](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=bobbyleu&repository=rinnai_smart&category=integration)
 
 #### Manual
 1. Copy the `rinnai_smart` directory from `custom_components` in this repository and place inside your Home Assistant's `custom_components` directory.
