@@ -5,12 +5,22 @@ from homeassistant.components.water_heater import (
     WaterHeaterEntity,
     WaterHeaterEntityFeature,
 )
-from homeassistant.const import PRECISION_WHOLE, UnitOfTemperature
+from homeassistant.const import (
+    MAJOR_VERSION,
+    MINOR_VERSION,
+    PRECISION_WHOLE,
+    UnitOfTemperature,
+)
 
 from .const import DOMAIN, OPERATION_MAP, WATER_HEATER, MIN_TEMP, MAX_TEMP, LOGGER
 from .device import RinnaiDeviceDataUpdateCoordinator
 from .entity import RinnaiEntity
 from .filters import entity_selected
+
+# Home Assistant 2026.11 renamed the water heater temperature properties to a
+# `native_` prefix and deprecated the old names (removed in 2027.11). Keep both
+# code paths so that older Home Assistant releases keep working.
+_NATIVE_TEMPERATURE = (MAJOR_VERSION, MINOR_VERSION) >= (2026, 11)
 
 
 async def async_setup_entry(hass, config_entry, async_add_entities):
@@ -29,7 +39,10 @@ class RinnaiWaterHeater(RinnaiEntity, WaterHeaterEntity):
     """Water Heater entity for a Rinnai Device"""
 
     _attr_operation_list = list(dict.fromkeys(OPERATION_MAP.values()))
-    _attr_temperature_unit = UnitOfTemperature.CELSIUS
+    if _NATIVE_TEMPERATURE:
+        _attr_native_temperature_unit = UnitOfTemperature.CELSIUS
+    else:
+        _attr_temperature_unit = UnitOfTemperature.CELSIUS
     _attr_precision = PRECISION_WHOLE
     _attr_min_temp = MIN_TEMP
     _attr_max_temp = MAX_TEMP
@@ -53,10 +66,19 @@ class RinnaiWaterHeater(RinnaiEntity, WaterHeaterEntity):
         """Return the icon to use for the valve."""
         return "mdi:water-boiler"
 
-    @property
-    def target_temperature(self):
-        """Return the temperature we try to reach"""
-        return self._device.target_temperature
+    if _NATIVE_TEMPERATURE:
+
+        @property
+        def native_target_temperature(self):
+            """Return the temperature we try to reach (native unit)."""
+            return self._device.target_temperature
+
+    else:
+
+        @property
+        def target_temperature(self):
+            """Return the temperature we try to reach."""
+            return self._device.target_temperature
 
     @property
     def extra_state_attributes(self) -> dict:
