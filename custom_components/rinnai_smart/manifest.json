@@ -3,11 +3,12 @@
   "name": "Rinnai Smart",
   "categories": ["climate.water_heaters"],
   "codeowners": [
+    "@bobbyleu",
     "@catro"
   ],
   "config_flow": true,
   "dependencies": [],
-  "documentation": "https://github.com/catro/rinnai_smart",
+  "documentation": "https://github.com/bobbyleu/rinnai_smart#about-this-fork",
   "homekit": {},
   "iot_class": "cloud_push",
   "issue_tracker": "https://github.com/bobbyleu/rinnai_smart/issues",
